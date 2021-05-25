@@ -1,8 +1,6 @@
 package com.coradev.vnwebs.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -10,6 +8,7 @@ import java.util.Set;
 @Entity
 @Table(name = "USER")
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
@@ -17,22 +16,23 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(name = "full_name")
+    @Column(name = "full_name", columnDefinition = "TEXT")
     private String fullName;
 
-    @Column(name = "username")
+    @Column(name = "username", columnDefinition = "TEXT")
     private String username;
 
-    @Column(name = "password")
+    @Column(name = "password", columnDefinition = "TEXT")
     private String password;
 
-    @Column(name = "biography")
+    @Column(name = "biography", columnDefinition = "TEXT")
     private String biography;
 
-    @Column(name = "avatar")
+    @Column(name = "avatar", columnDefinition = "TEXT")
     private String avatar;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Set<Post> posts;
-
 }

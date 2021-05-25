@@ -9,6 +9,7 @@ import java.util.Collection;
 @Entity
 @Table(name = "CATEGORY")
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Category {
@@ -30,4 +31,10 @@ public class Category {
             inverseJoinColumns = @JoinColumn(name = "post_id")
     )
     private Collection<Post> posts;
+
+    public Category(long id, String name, String description) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+    }
 }

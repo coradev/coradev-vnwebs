@@ -8,6 +8,7 @@ import java.util.Collection;
 @Entity
 @Table(name = "TAG")
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Tag {

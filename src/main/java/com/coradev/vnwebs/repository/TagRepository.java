@@ -1,4 +1,4 @@
 package com.coradev.vnwebs.repository;
 
-public interface CategoryRepository {
+public interface TagRepository {
 }
