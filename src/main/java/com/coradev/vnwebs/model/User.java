@@ -1,38 +1,28 @@
 package com.coradev.vnwebs.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "USER")
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-
-    @Column(name = "full_name", columnDefinition = "TEXT")
-    private String fullName;
-
-    @Column(name = "username", columnDefinition = "TEXT")
+    private Long id;
     private String username;
-
-    @Column(name = "password", columnDefinition = "TEXT")
     private String password;
-
-    @Column(name = "biography", columnDefinition = "TEXT")
-    private String biography;
-
-    @Column(name = "avatar", columnDefinition = "TEXT")
+    private String fullName;
+    private String email;
     private String avatar;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    private Set<Post> posts;
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts;
+
 }

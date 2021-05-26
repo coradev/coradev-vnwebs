@@ -1,40 +1,24 @@
 package com.coradev.vnwebs.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 
 import javax.persistence.*;
-import java.util.Collection;
-
+import java.util.List;
 
 @Entity
 @Table(name = "CATEGORY")
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-
-    @Column(name = "name")
+    private Long id;
     private String name;
 
-    @Column(name = "description")
-    private String description;
-
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    @JoinTable(name = "category_post",
-            joinColumns = @JoinColumn(name = "category_id"),
-            inverseJoinColumns = @JoinColumn(name = "post_id")
-    )
-    private Collection<Post> posts;
-
-    public Category(long id, String name, String description) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-    }
+    @OneToMany(mappedBy = "category")
+    private List<Post> posts;
 }

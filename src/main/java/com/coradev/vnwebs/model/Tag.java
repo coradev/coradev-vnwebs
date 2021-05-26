@@ -1,31 +1,23 @@
 package com.coradev.vnwebs.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "TAG")
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-
-    @Column(name = "name")
+    private Long id;
     private String name;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    @JoinTable(name = "tag_post",
-            joinColumns = @JoinColumn(name = "tag_id"),
-            inverseJoinColumns = @JoinColumn(name = "post_id")
-    )
-    private Collection<Post> posts;
-
+    @ManyToMany(mappedBy = "tags")
+    private List<Post> posts;
 }

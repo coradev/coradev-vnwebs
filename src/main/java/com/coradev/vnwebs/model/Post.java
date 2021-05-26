@@ -1,68 +1,73 @@
 package com.coradev.vnwebs.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "POST")
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-
-    @Column(name = "title", columnDefinition = "TEXT")
+    private Long id;
     private String title;
-
-    @Column(name = "content", columnDefinition = "TEXT")
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
     private String content;
-
-    @Column(name = "create_date")
-    private Date createdDate;
-
-    @Column(name = "cover_image", columnDefinition = "TEXT")
     private String coverImage;
-
-    @Column(name = "published")
+    private String flag;
+    private Integer view;
+    private boolean appreciation;
+    private boolean shareStatement;
+    private boolean commentable;
     private boolean published;
+    private boolean recommend;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createTime;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updateTime;
+    private String description;
 
     @ManyToOne
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    @JoinColumn(name = "user_id", nullable = false)
+    private Category category;
+    @ManyToMany(cascade = {CascadeType.PERSIST})
+    private List<Tag> tags;
+    @Transient
+    private String tagIds;
+    @ManyToOne
     private User user;
 
-    @ManyToMany(mappedBy = "posts")
-    @EqualsAndHashCode.Exclude
-    private Collection<Category> categories;
+    @OneToMany(mappedBy = "post")
+    private List<Comment> comments =new ArrayList<>();
 
-    @ManyToMany(mappedBy = "posts")
-    @EqualsAndHashCode.Exclude
-    private Collection<Tag> tags;
-
-    public Post(String title, String content, Date createdDate, String coverImage, boolean published, User user, Collection<Category> categories, Collection<Tag> tags) {
-        this.title = title;
-        this.content = content;
-        this.createdDate = createdDate;
-        this.coverImage = coverImage;
-        this.published = published;
-        this.user = user;
-        this.categories = categories;
-        this.tags = tags;
+    private String tagsToIds(List<Tag> tags) {
+        if (!tags.isEmpty()) {
+            StringBuffer ids = new StringBuffer();
+            boolean flag = false;
+            for (Tag tag : tags) {
+                if (flag) {
+                    ids.append(",");
+                } else {
+                    flag = true;
+                }
+                ids.append(tag.getId());
+            }
+            return ids.toString();
+        } else {
+            return tagIds;
+        }
     }
 
-    public Post(String title, String content, Date createdDate, String coverImage, boolean published, User user) {
-        this.title = title;
-        this.content = content;
-        this.createdDate = createdDate;
-        this.coverImage = coverImage;
-        this.published = published;
-        this.user = user;
-    }
+
+
+
+
 }
