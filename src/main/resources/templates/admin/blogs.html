@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="admin/_fragments :: head(~{::title})">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Blog management</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="../../static/css/me.css">
+</head>
+<body>
+
+    <!--navigation-->
+    <!--attached保证segment没有圆角-->
+    <nav th:replace="admin/_fragments :: menu(1)" class="ui inverted attached segment m-padded-tb-mini">
+        <div class="ui container">
+            <div class="ui inverted secondary stackable menu">
+                <h2 class="ui teal header item">Backstage Management</h2>
+                <a href="#" class="active m-item item m-mobile-hide"><i class="home icon"></i></i>Blog</a>
+                <a href="#" class="m-item item m-mobile-hide"><i class="idea icon"></i>Type</a>
+                <a href="#" class="m-item item m-mobile-hide"><i class="tags icon"></i>Tag</a>
+                <div class="right menu">
+                    <div class="ui dropdown item">
+                        <div class="text">
+                            <img src="https://unsplash.it/100/100?image=1005" alt="" class="ui avatar image">
+                            zhd
+                        </div>
+                        <i class="dropdown icon"></i>
+                        <div class="menu">
+                            <a href="#" class="item">Logout</a>
+                        </div>
+                    </div>
+                </div>
+
+            </right>
+            </div>
+        </div>
+        <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
+            <i class="sidebar icon"></i>
+        </a>
+    </nav>
+    <div class="ui attached pointing menu">
+        <div class="ui container">
+            <div class="ui right menu">
+                <a href="#" th:href="@{/admin/blogs/input}" class="item">Launch</a>
+                <a href="#" th:href="@{/admin/blogs}" class="active teal item">List</a>
+            </div>
+        </div>
+
+    </div>
+
+    <!--中间内容-->
+    <div class="m-padded-tb-large m-container-small">
+        <div class="ui container">
+            <div class="ui secondary segment form">
+                <input type="hidden" name="page">
+                <div class="inline fields">
+                    <div class="field">
+                        <input type="text" name="title" placeholder="title">
+                    </div>
+                    <div class="field">
+                        <div class="ui labeled action input">
+
+                            <div class="ui type selection dropdown">
+                                <input type="hidden" name="typeId">
+                                <i class="dropdown icon"></i>
+                                <div class="default text">type</div>
+                                <div class="menu">
+                                    <div th:each="type : ${types}" class="item" data-value="1" th:data-value="${type.id}" th:text="${type.name}">Log</div>
+                                </div>
+                            </div>
+                            <button id="clear-btn" class="ui compact button">clear</button>
+                        </div>
+
+                    </div>
+                    <div class="field">
+                        <div class="ui checkbox">
+                            <input type="checkbox" id="recommend" name="recommend">
+                            <label for="recommend">recommend</label>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <button type="button" id="search-btn" class="ui mini teal basic button"><i class="search icon"></i>Search</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="table-container">
+                <table th:fragment="blogList" class="ui compact teal table">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Title</th>
+                        <th>Type</th>
+                        <th>Recommend</th>
+                        <th>Status</th>
+                        <th>Update time</th>
+                        <th>Operation</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="blog, iterStat : ${page.content}">
+                        <td th:text="${iterStat.count}">1</td>
+                        <td th:text="${blog.title}">story</td>
+                        <td th:text="${blog.type.name}">emotion</td>
+                        <td th:text="${blog.recommend ? 'Yes' : 'No'}">Yes</td>
+                        <td th:text="${blog.published ? 'Launched' : 'Draft'}">Launched</td>
+                        <td th:text="${blog.updateTime}">2019-6-8  14:30</td>
+                        <td>
+                            <a href="#" th:href="@{/admin/blogs/{id}/input(id=${blog.id})}" class="ui mini teal button">Edit</a>
+                            <a href="#" th:href="@{/admin/blogs/{id}/delete(id=${blog.id})}" class="ui mini red button">Delete</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <th colspan="7">
+                            <div class="ui mini pagination menu" th:if="${page.totalPages} > 1">
+                                <a onclick="page(page.this)" th:attr="data-page=${page.number}-1" class="item" th:unless="${page.first}">Prev</a>
+                                <a onclick="page(page.this)" th:attr="data-page=${page.number}+1" class="item" th:unless="${page.last}">Next</a>
+                            </div>
+                            <a href="" th:href="@{/admin/blogs/input}" class="ui mini right floated teal basic button">New</a>
+                        </th>
+                    </tr>
+                    </tfoot>
+                </table>
+
+                <div class="ui success message" th:unless="${#strings.isEmpty(message)}">
+                    <i class="close icon"></i>
+                    <div class="header">Sign：</div>
+                    <p th:text="${message}">Congratulation! Operation successful！</p>
+                </div>
+            </div>
+
+
+
+        </div>
+
+
+    </div>
+
+    <!--底部-->
+    <footer th:replace="admin/_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
+        <div class="ui center aligned container">
+            <!--分成16份-->
+            <div class="ui inverted divided stackable grid">
+                <div class="four wide column">
+                    <div class="ui inverted link list">
+                        <div class="item">
+                            <img src="../static/images/show.jpg" th:src="@{/images/show.jpg}" class="ui rounded image" alt="" style="width: 110px">
+                        </div>
+                    </div>
+                </div>
+                <div class="eight wide column">
+                    <h4 class="ui inverted header m-text-spaced">about me</h4>
+                    <div class="ui inverted link list">
+                        <p class="m-text-thin m-text-spaced m-opacity-mini m-text-lined" >This is my personal blog, I will share my favorite articles, music, films, technological blog ...</p>
+                    </div>
+                </div>
+                <div class="four wide column">
+                    <h4 class="ui inverted header m-text-thin m-text-spaced m-text-lined">Contact Me</h4>
+                    <div class="ui inverted link list m-text-thin m-text-spaced m-text-lined">
+                        <a href="#" class="item">QQ：648398197</a>
+                        <a href="#" class="item">Email：648398197@qq.com</a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="ui inverted section divider"></div>
+            <p class="m-text-thin m-text-spaced m-opacity-mini m-text-lined">Copyright © 2019 Designed by zhd</p>
+        </div>
+
+
+    </footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+
+    <script>
+        $('.menu.toggle').click(function () {
+            $('.m-item').toggleClass('m-mobile-hide');
+        });
+
+        $('.ui.dropdown').dropdown({
+            on: 'hover'
+        });
+
+        $('#clear-btn')
+            .on('click', function() {
+                $('.ui.type.dropdown')
+                    .dropdown('clear')
+                ;
+            })
+        ;
+
+        function page(obj) {
+            $("[name='page']").val($(obj).data("page"));
+            loaddata();
+        }
+
+        $("#search-btn").click(function () {
+            $("[name='page']").val(0);
+            loaddata();
+        });
+
+        function loaddata(){
+            $("#table-container").load("/admin/blogs/search",{
+                title : $("[name='title']").val(),
+                typeId : $("[name='typeId']").val(),
+                recommend : $("[name='recommend']").prop('checked'),
+                page : $("[name='page']").val()
+            });
+        }
+
+        $('.message .close')
+            .on('click', function () {
+                $(this)
+                    .closest('.message')
+                    .transition('fade');
+            });
+    </script>
+</body>
+</html>

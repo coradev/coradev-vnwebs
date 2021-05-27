@@ -46,7 +46,11 @@ public class Post {
     private User user;
 
     @OneToMany(mappedBy = "post")
-    private List<Comment> comments =new ArrayList<>();
+    private List<Comment> comments = new ArrayList<>();
+
+    public void init() {
+        this.tagIds = tagsToIds(this.getTags());
+    }
 
     private String tagsToIds(List<Tag> tags) {
         if (!tags.isEmpty()) {
@@ -65,9 +69,4 @@ public class Post {
             return tagIds;
         }
     }
-
-
-
-
-
 }

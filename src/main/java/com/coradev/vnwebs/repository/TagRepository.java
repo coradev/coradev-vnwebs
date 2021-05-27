@@ -12,5 +12,5 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
     Tag findByName(String name);
 
     @Query("select t from Tag t")
-    List<Tag>findTop(Pageable pageable);
+    List<Tag> findTop(Pageable pageable);
 }

@@ -24,9 +24,7 @@ public class MarkdownUtils {
     }
 
     public static String markdownToHtmlExtensions(String markdown) {
-        //h标题生成id
         Set<Extension> headingAnchorExtensions = Collections.singleton(HeadingAnchorExtension.create());
-        //转换table的HTML
         List<Extension> tableExtension = Arrays.asList(TablesExtension.create());
         Parser parser = Parser.builder()
                 .extensions(tableExtension)
@@ -47,7 +45,6 @@ public class MarkdownUtils {
     static class CustomAttributeProvider implements AttributeProvider {
         @Override
         public void setAttributes(Node node, String tagName, Map<String, String> attributes) {
-            //改变a标签的target属性为_blank
             if (node instanceof Link) {
                 attributes.put("target", "_blank");
             }

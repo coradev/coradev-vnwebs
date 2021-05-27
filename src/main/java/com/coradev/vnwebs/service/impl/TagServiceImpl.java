@@ -10,10 +10,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class TagServiceImpl implements TagService {
 
     private final TagRepository tagRepository;
@@ -50,8 +52,8 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public List<Tag> listTagTop(Integer size) {
-        //Sort sort = new Sort(Sort.Direction.DESC, "posts.size");
-        Pageable pageable = PageRequest.of(0, size, Sort.Direction.DESC);
+        Sort sort = Sort.by(Sort.Direction.DESC, "posts.size");
+        Pageable pageable = PageRequest.of(0, size, sort);
         return tagRepository.findTop(pageable);
     }
 
@@ -60,11 +62,11 @@ public class TagServiceImpl implements TagService {
         return tagRepository.findAllById(convertToString(ids));
     }
 
-    private List<Long> convertToString(String ids){
+    private List<Long> convertToString(String ids) {
         List<Long> list = new ArrayList<>();
-        if(ids != null && !"".equals(ids)){
+        if (ids != null && !"".equals(ids)) {
             String[] idArray = ids.split(",");
-            for(int i = 0; i < idArray.length; i++){
+            for (int i = 0; i < idArray.length; i++) {
                 list.add(new Long(idArray[i]));
             }
         }
@@ -74,7 +76,7 @@ public class TagServiceImpl implements TagService {
     @Override
     public Tag updateTag(Long id, Tag tag) {
         Tag tag1 = tagRepository.findById(id).get();
-        if(tag1 == null){
+        if (tag1 == null) {
             throw new NotFoundException("This tag doesn't exist");
         }
         BeanUtils.copyProperties(tag, tag1);
