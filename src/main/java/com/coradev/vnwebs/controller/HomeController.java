@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -31,35 +30,34 @@ public class HomeController {
     }
 
     @GetMapping("/")
-    public String index(@PageableDefault(size = 8, sort = "updateTime", direction = Sort.Direction.DESC) Pageable pageable, Model model){
-        model.addAttribute("page",postService.listPost(pageable));
+    public String index(@PageableDefault(size = 4, sort = "updateTime", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
+        model.addAttribute("page", postService.listPost(pageable));
         model.addAttribute("categories", categoryService.listCategoryTop(5));
         model.addAttribute("tags", tagService.listTagTop(10));
         model.addAttribute("recommendPosts", postService.listRecommendPostsTop(8));
         return "index";
     }
 
-    @PostMapping("/search")
-    public String search(@PageableDefault(size = 8, sort = "updateTime", direction = Sort.Direction.DESC) Pageable pageable,
-                         @RequestParam String query, Model model){
-        model.addAttribute("page", postService.listPost("%"+query+"%", pageable));
+    @GetMapping("/search")
+    public String search(@PageableDefault(size = 6, sort = "updateTime",
+                            direction = Sort.Direction.DESC) Pageable pageable,
+                            @RequestParam String query, Model model) {
+        model.addAttribute("page", postService.listPost("%" + query + "%", pageable));
         model.addAttribute("query", query);
         return "search";
     }
 
     @GetMapping("/post/{id}")
-    public String post(@PathVariable Long id, Model model){
+    public String post(@PathVariable Long id, Model model) {
         model.addAttribute("post", postService.getAndConvert(id));
         return "post";
     }
 
     @GetMapping("/footer/newpost")
-    public String newPosts(Model model){
+    public String newPosts(Model model) {
         model.addAttribute("newposts", postService.listRecommendPostsTop(4));
         return "_fragments :: newPostList";
     }
-
-
 
 
 }
