@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>POST</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <meta name="keywords"
+          content="blog, business, clean, clear, cooporate, creative, design web, flat, marketing, minimal, portfolio, shop, shopping, unique">
+    <meta name="author" content="PISEN | Deer Creative Theme">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/slick.css">
+    <link rel="stylesheet" href="/assets/css/jquery-ui.min.css">
+    <link rel="stylesheet" href="/assets/css/custom_bootstrap.css">
+    <link rel="stylesheet" href="/assets/css/fontawesome.css">
+    <link rel="stylesheet" href="/assets/css/elegant.css">
+    <link rel="stylesheet" href="/assets/css/plyr.css">
+    <link rel="stylesheet" href="/assets/css/aos.css">
+    <link rel="stylesheet" href="/assets/css/animate.css">
+    <link rel="stylesheet" href="/assets/css/themify-icons.css">
+</head>
+
+<body>
+<div id="main">
+
+    <header>
+        <div class="header-wrapper">
+            <div class="container">
+                <div class="header-menu">
+                    <div class="row no-gutters align-items-center justify-content-center">
+                        <div class="col-4 col-md-2"><a class="logo" href="#"><img src="/assets/images/logo.png"
+                                                                                  alt="logo"></a></div>
+                        <div class="col-8 col-md-8">
+                            <div class="mobile-menu"><a href="#" id="showMenu"><i class="fas fa-bars"></i></a></div>
+                            <nav class="navigation">
+                                <ul>
+                                    <li class="nav-item"><a class="pisen-nav-link" href="/">Home</a>
+                                    </li>
+                                    <li class="nav-item"><a class="pisen-nav-link" href="">Categories</a><i
+                                            class="submenu-opener fas fa-plus"></i>
+                                        <ul class="sub-menu">
+                                            <li class="sub-menu_item"><a class="sub-menu-link" href="#">Java
+                                                Programming</a></li>
+                                            <li class="sub-menu_item"><a class="sub-menu-link" href="#">Spring
+                                                Framework</a></li>
+                                            <li class="sub-menu_item"><a class="sub-menu-link" href="#">Hibernate</a>
+                                            </li>
+                                            <li class="sub-menu_item"><a class="sub-menu-link" href="#">PHP
+                                                Programming</a></li>
+                                            <li class="sub-menu_item"><a class="sub-menu-link" href="#">Laravel</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item"><a class="pisen-nav-link" href="#">Contact</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                        <div class="col-0 col-xl-2">
+                            <div class="menu-function">
+                                <div id="search">
+                                    <a class="search-btn" href="#"><i class="fas fa-search fa-2x"></i></a>
+                                </div>
+                                <div class="social-contact">
+                                    <a href="https://www.facebook.com/truongnq2k"><i
+                                            class="fab fa-facebook-f fa-2x"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!--End header-->
+
+    <section class="blog-detail blog-detail-02">
+        <div class="full-fluid">
+            <div class="blog-detail_banner" th:style="'background-image:url(' + ${post.coverImage} + ');'">
+                <h1 class="blog-detail-title" th:text="${post.title}"></h1>
+                <div class="blog-credit">
+                    <div class="blog-credit_wrapper">
+                        <p><i class="far fa-clock"></i><span
+                                th:text="${#dates.format(post.updateTime, 'MMM dd,yyyy')}"></span></p>
+                        <h5>by <span th:text="${post.user.fullName}"></span></h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-lg-10">
+                    <div class="post-block" th:utext="${post.content}">
+                        <p class="blog-pragraph">Your clients would like to see optimal results for minimal work.
+                            For this reason, it can be difficult to convince them that a website redesign enhances
+                            SEO strategies. However, if you try to redesign a site without taking SEO into account,
+                            you are going to face bigger problems down the road. </p>
+                        <img class="img-wrapper"
+                             src="assets/images/blog_detail/blog-bundle-img.png"
+                             alt="post image">
+                        <h3 class="post-title">1. You May Have to Redo All Your Content</h3>
+                        <p class="blog-pragraph">It is impossible to create effective content without taking SEO
+                            into consideration. If you create content without thinking about SEO, you may need to go
+                            back and redo all the new content you made for your website when you start your SEO
+                            strategy. There are a few reasons for this.</p>
+                        <div class="blog-quote">
+                            <q>Technology is nothing. What&apos;s important is that you have a faith in people, that
+                                they&apos;re basically good and smart, and if you give them tools, they&apos;ll do
+                                wonderful things with them</q>
+                            <p class="quote-author">Steven Jobs </p>
+                        </div>
+                    </div>
+                    <div class="post-footer">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="post-tags">
+                                    <a href="#" th:each="tag : ${post.tags}" th:href="@{/tag/{id}(id=${tag.id})}"
+                                       th:text="${tag.name}">Tag Name</a>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 text-sm-right">
+                                <div class="post-share">
+                                    <p>Share: </p>
+                                    <div class="socials">
+                                        <a href="https://www.facebook.com/"><i class="fab fa-facebook fa-2x"></i></a>
+                                        <a href="https://www.instagram.com/"><i class="fab fa-instagram fa-2x"></i></a>
+                                        <a href="https://twitter.com/"><i class="fab fa-twitter fa-2x"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="post-comment">
+                        <h2>Leave a comment</h2>
+                        <form action="">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <input class="input-form trans-bg" id="name" type="text" placeholder="Name"
+                                           required>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <input class="input-form trans-bg" id="email" type="email" placeholder="Email"
+                                           required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+									<textarea class="textarea-form trans-bg" id="messages" name="" cols="30" rows="6"
+                                              placeholder="Message"></textarea>
+                            </div>
+                            <button class="normal-btn">Send message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--End posts-->
+
+    <footer class="bg-3 pt-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-4">
+                            <div class="footer-links">
+                                <h5 class="footer-link--title">Quick Link</h5>
+                                <ul>
+                                    <li><a class="footer-link" href="">Reditect Link</a></li>
+                                    <li><a class="footer-link" href="">Reditect Link</a></li>
+                                    <li><a class="footer-link" href="">Reditect Link</a></li>
+                                    <li><a class="footer-link" href="">Reditect Link</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-4">
+                            <div class="footer-links">
+                                <h5 class="footer-link--title">Information</h5>
+                                <ul>
+                                    <li><a class="footer-link" href="#">Home</a></li>
+                                    <li><a class="footer-link" href="#">Features</a></li>
+                                    <li><a class="footer-link" href="#">About Us</a></li>
+                                    <li><a class="footer-link" href="#">Contact</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-4">
+                            <div class="footer-contact">
+                                <h5 class="footer-link--title">Contact us</h5>
+                                <div class="contact-method">
+                                    <p>FPT University, Ha Noi, VN</p>
+                                    <p>truongnq2k@gmail.com</p>
+                                </div>
+                                <div class="social-contact">
+                                    <a class="icon-btn" href="https://www.facebook.com/truongnq2k" target="_blank">
+                                        <i class="fab fa-facebook-f"></i>
+                                    </a>
+                                    <a class="icon-btn" href="https://www.github.com/truongnq2k" target="_blank">
+                                        <i class="fab fa-github"></i>
+                                    </a>
+                                    <a class="icon-btn" href="https://twitter.com/vnwebs" target="_blank">
+                                        <i class="fab fa-twitter"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="footer-link--title">Subscribe To Get Latest Post </h5>
+                    <form action="" method="post">
+                        <div class="email-form">
+                            <input class="input-form" type="text" placeholder="Enter Your Mail">
+                            <button><i class="fas fa-paper-plane"></i></button>
+                        </div>
+                    </form>
+                    <p class="copyright">Copyright ©2021 CoraDev Community</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!--End footer-->
+    <script src="/assets/js/jquery-3.4.0.min.js"></script>
+    <script src="/assets/js/jquery-ui.min.js"></script>
+    <script src="/assets/js/slick.min.js"></script>
+    <script src="/assets/js/plyr.min.js"></script>
+    <script src="/assets/js/aos.js"></script>
+    <script src="/assets/js/jquery.scrollUp.min.js"></script>
+    <script src="/assets/js/masonry.pkgd.min.js"></script>
+    <script src="/assets/js/imagesloaded.pkgd.min.js"></script>
+    <script src="/assets/js/numscroller-1.0.js"></script>
+    <script src="/assets/js/jquery.countdown.min.js"></script>
+    <script src="/assets/js/main.js"></script>
+</div>
+</body>
+
+</html>
