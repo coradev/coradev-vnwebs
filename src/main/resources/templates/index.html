@@ -1,79 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
-<head>
-    <title>HOME PAGE</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
-    <meta name="keywords"
-          content="blog, business, clean, clear, cooporate, creative, design web, flat, marketing, minimal, portfolio, shop, shopping, unique">
-    <meta name="author" content="PISEN | Deer Creative Theme">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/slick.css">
-    <link rel="stylesheet" href="assets/css/jquery-ui.css">
-    <link rel="stylesheet" href="assets/css/custom_bootstrap.css">
-    <link rel="stylesheet" href="assets/css/fontawesome.css">
-    <link rel="stylesheet" href="assets/css/elegant.css">
-    <link rel="stylesheet" href="assets/css/plyr.css">
-    <link rel="stylesheet" href="assets/css/aos.css">
-    <link rel="stylesheet" href="assets/css/animate.css">
-    <link rel="stylesheet" href="assets/css/themify-icons.css">
+<head th:replace="_fragment :: head(~{::title})">
+    <title>Vnwebs.net - CoraDev Blog</title>
 </head>
 
 <body>
 <div id="main">
-    <header>
-        <div class="header-wrapper">
-            <div class="container">
-                <div class="header-menu">
-                    <div class="row no-gutters align-items-center justify-content-center">
-                        <div class="col-4 col-md-2">
-                            <a class="logo" href="/">
-                                <img src="assets/images/logo.png" alt="logo">
-                            </a>
-                        </div>
-                        <div class="col-8 col-md-8">
-                            <div class="mobile-menu"><a href="#" id="showMenu"><i class="fas fa-bars"></i></a></div>
-                            <nav class="navigation">
-                                <ul>
-                                    <li class="nav-item"><a class="pisen-nav-link active" href="/">Home</a>
-                                    </li>
-                                    <li class="nav-item"><a class="pisen-nav-link" href="">Categories</a><i
-                                            class="submenu-opener fas fa-plus"></i>
-                                        <ul class="sub-menu">
-                                            <li class="sub-menu_item"><a class="sub-menu-link" href="#">Java
-                                                Programming</a></li>
-                                            <li class="sub-menu_item"><a class="sub-menu-link" href="#">Spring
-                                                Framework</a></li>
-                                            <li class="sub-menu_item"><a class="sub-menu-link"
-                                                                         href="#">Hibernate</a></li>
-                                            <li class="sub-menu_item"><a class="sub-menu-link" href="#">PHP
-                                                Programming</a></li>
-                                            <li class="sub-menu_item"><a class="sub-menu-link" href="#">Laravel</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="nav-item"><a class="pisen-nav-link" href="#">Contact</a></li>
-                                </ul>
-                            </nav>
-                        </div>
-                        <div class="col-0 col-xl-2">
-                            <div class="menu-function">
-
-                                <div id="search">
-                                    <a class="search-btn" href="#"><i class="fas fa-search fa-2x"></i></a>
-                                </div>
-
-                                <div class="social-contact">
-                                    <a href="https://www.facebook.com/truongnq2k"><i
-                                            class="fab fa-facebook-f fa-2x"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <header th:replace="_fragment :: menu(1)">
     </header>
     <!--End header-->
 

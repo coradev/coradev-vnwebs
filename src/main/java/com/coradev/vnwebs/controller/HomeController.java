@@ -56,7 +56,7 @@ public class HomeController {
     @GetMapping("/footer/newpost")
     public String newPosts(Model model) {
         model.addAttribute("newposts", postService.listRecommendPostsTop(4));
-        return "_fragments :: newPostList";
+        return "_fragment :: newPostList";
     }
 
 

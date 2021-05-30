@@ -1,29 +1,28 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head th:replace="admin/_fragments :: head(~{::title})">
-    <title>New Tag Add</title>
+    <title>Add New Category</title>
 </head>
 <body>
-    <nav th:replace="admin/_fragments :: menu(3)">
+    <nav th:replace="admin/_fragments :: menu(2)">
     </nav>
     <div class="ui attached pointing menu">
         <div class="ui container">
             <div class="ui right menu">
-                <a href="#" th:href="@{/admin/tags/input}" class="active teal item">New</a>
-                <a href="#" th:href="@{/admin/tags}" class="item">List</a>
+                <a href="#" th:href="@{/admin/categories/input}" class="active teal item">New</a>
+                <a href="#" th:href="@{/admin/categories}" class="item">List</a>
             </div>
         </div>
     </div>
 
-    <!--Content-->
     <div class="m-padded-tb-large m-container-small">
         <div class="ui container">
-            <form action="#" method="post" th:object="${tag}" th:action="*{id} == null ? @{/admin/tags} : @{/admin/tags/{id}(id=*{id})}" class="ui form">
+            <form action="#" method="post" th:object="${category}" th:action="*{id} == null ? @{/admin/categories} : @{/admin/categories/{id}(id=*{id})}" class="ui form">
                 <input type="hidden" name="id" th:value="*{id}">
                 <div class="required field">
                     <div class="ui left labeled input">
                         <label class="ui teal basic label">Name</label>
-                        <input type="text" name="name" placeholder="Tag Name" th:value="*{name}">
+                        <input type="text" name="name" placeholder="Category Name" th:value="*{name}">
                     </div>
                 </div>
                 <div class="ui error message"></div>
@@ -36,7 +35,7 @@
     </div>
 
     <!--bottom-->
-    <footer th:replace="admin/_fragments :: footer" >
+    <footer th:replace="admin/_fragments :: footer">
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
@@ -58,7 +57,7 @@
                     identifier: 'name',
                     rules: [{
                         type: 'empty',
-                        prompt: 'Attention：Please input tag name!'
+                        prompt: 'Attention：Please input category name!'
                     }]
                 }
             }

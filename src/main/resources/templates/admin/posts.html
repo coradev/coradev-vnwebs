@@ -3,52 +3,22 @@
 <head th:replace="admin/_fragments :: head(~{::title})">
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Blog management</title>
+    <title>CoraDev</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
     <link rel="stylesheet" href="../../static/css/me.css">
 </head>
 <body>
-
-    <!--navigation-->
-    <!--attached保证segment没有圆角-->
-    <nav th:replace="admin/_fragments :: menu(1)" class="ui inverted attached segment m-padded-tb-mini">
-        <div class="ui container">
-            <div class="ui inverted secondary stackable menu">
-                <h2 class="ui teal header item">Backstage Management</h2>
-                <a href="#" class="active m-item item m-mobile-hide"><i class="home icon"></i></i>Blog</a>
-                <a href="#" class="m-item item m-mobile-hide"><i class="idea icon"></i>Type</a>
-                <a href="#" class="m-item item m-mobile-hide"><i class="tags icon"></i>Tag</a>
-                <div class="right menu">
-                    <div class="ui dropdown item">
-                        <div class="text">
-                            <img src="https://unsplash.it/100/100?image=1005" alt="" class="ui avatar image">
-                            zhd
-                        </div>
-                        <i class="dropdown icon"></i>
-                        <div class="menu">
-                            <a href="#" class="item">Logout</a>
-                        </div>
-                    </div>
-                </div>
-
-            </right>
-            </div>
-        </div>
-        <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
-            <i class="sidebar icon"></i>
-        </a>
+    <nav th:replace="admin/_fragments :: menu(1)">
     </nav>
     <div class="ui attached pointing menu">
         <div class="ui container">
             <div class="ui right menu">
-                <a href="#" th:href="@{/admin/blogs/input}" class="item">Launch</a>
-                <a href="#" th:href="@{/admin/blogs}" class="active teal item">List</a>
+                <a href="#" th:href="@{/admin/posts/input}" class="item">Launch</a>
+                <a href="#" th:href="@{/admin/posts}" class="active teal item">List</a>
             </div>
         </div>
 
     </div>
-
-    <!--中间内容-->
     <div class="m-padded-tb-large m-container-small">
         <div class="ui container">
             <div class="ui secondary segment form">
@@ -61,11 +31,11 @@
                         <div class="ui labeled action input">
 
                             <div class="ui type selection dropdown">
-                                <input type="hidden" name="typeId">
+                                <input type="hidden" name="categoryId">
                                 <i class="dropdown icon"></i>
-                                <div class="default text">type</div>
+                                <div class="default text">category</div>
                                 <div class="menu">
-                                    <div th:each="type : ${types}" class="item" data-value="1" th:data-value="${type.id}" th:text="${type.name}">Log</div>
+                                    <div th:each="category : ${categories}" class="item" data-value="1" th:data-value="${category.id}" th:text="${category.name}">Log</div>
                                 </div>
                             </div>
                             <button id="clear-btn" class="ui compact button">clear</button>
@@ -85,12 +55,12 @@
             </div>
 
             <div id="table-container">
-                <table th:fragment="blogList" class="ui compact teal table">
+                <table th:fragment="postList" class="ui compact teal table">
                     <thead>
                     <tr>
                         <th></th>
                         <th>Title</th>
-                        <th>Type</th>
+                        <th>Category</th>
                         <th>Recommend</th>
                         <th>Status</th>
                         <th>Update time</th>
@@ -98,16 +68,16 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="blog, iterStat : ${page.content}">
+                    <tr th:each="post, iterStat : ${page.content}">
                         <td th:text="${iterStat.count}">1</td>
-                        <td th:text="${blog.title}">story</td>
-                        <td th:text="${blog.type.name}">emotion</td>
-                        <td th:text="${blog.recommend ? 'Yes' : 'No'}">Yes</td>
-                        <td th:text="${blog.published ? 'Launched' : 'Draft'}">Launched</td>
-                        <td th:text="${blog.updateTime}">2019-6-8  14:30</td>
+                        <td th:text="${post.title}">story</td>
+                        <td th:text="${post.category.name}">emotion</td>
+                        <td th:text="${post.recommend ? 'Yes' : 'No'}">Yes</td>
+                        <td th:text="${post.published ? 'Launched' : 'Draft'}"></td>
+                        <td th:text="${post.updateTime}"></td>
                         <td>
-                            <a href="#" th:href="@{/admin/blogs/{id}/input(id=${blog.id})}" class="ui mini teal button">Edit</a>
-                            <a href="#" th:href="@{/admin/blogs/{id}/delete(id=${blog.id})}" class="ui mini red button">Delete</a>
+                            <a href="#" th:href="@{/admin/posts/{id}/input(id=${post.id})}" class="ui mini teal button">Edit</a>
+                            <a href="#" th:href="@{/admin/posts/{id}/delete(id=${post.id})}" class="ui mini red button">Delete</a>
                         </td>
                     </tr>
                     </tbody>
@@ -118,7 +88,7 @@
                                 <a onclick="page(page.this)" th:attr="data-page=${page.number}-1" class="item" th:unless="${page.first}">Prev</a>
                                 <a onclick="page(page.this)" th:attr="data-page=${page.number}+1" class="item" th:unless="${page.last}">Next</a>
                             </div>
-                            <a href="" th:href="@{/admin/blogs/input}" class="ui mini right floated teal basic button">New</a>
+                            <a href="" th:href="@{/admin/posts/input}" class="ui mini right floated teal basic button">New</a>
                         </th>
                     </tr>
                     </tfoot>
@@ -138,10 +108,8 @@
 
     </div>
 
-    <!--底部-->
     <footer th:replace="admin/_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
         <div class="ui center aligned container">
-            <!--分成16份-->
             <div class="ui inverted divided stackable grid">
                 <div class="four wide column">
                     <div class="ui inverted link list">
@@ -204,9 +172,9 @@
         });
 
         function loaddata(){
-            $("#table-container").load("/admin/blogs/search",{
+            $("#table-container").load("/admin/posts/search",{
                 title : $("[name='title']").val(),
-                typeId : $("[name='typeId']").val(),
+                categoryId : $("[name='categoryId']").val(),
                 recommend : $("[name='recommend']").prop('checked'),
                 page : $("[name='page']").val()
             });

@@ -1,19 +1,19 @@
-spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/coradev-vnwebs?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
-    username: root
-    password:
+  spring:
+    datasource:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/coradev-vnwebs
+      username: root
+      password:
 
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
+    jpa:
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.MySQL5Dialect
+      hibernate:
+        ddl-auto: update
+      show-sql: true
 
-logging:
-  level:
-    root: info
-    com.zhd.blog: debug
-  file: log/blog-dev.log
-server:
-  port: 8081
+
+
+
+
